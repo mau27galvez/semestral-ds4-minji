@@ -8,8 +8,6 @@ using WebApplication1.user;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", b =>
@@ -27,7 +25,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
-    .AddCookie(IdentityConstants.ApplicationScheme);
+    .AddCookie(IdentityConstants.ApplicationScheme)
+    .AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
