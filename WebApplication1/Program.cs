@@ -25,8 +25,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
-    .AddCookie(IdentityConstants.ApplicationScheme)
-    .AddBearerToken(IdentityConstants.BearerScheme);
+    .AddBearerToken(IdentityConstants.BearerScheme, options =>
+    {
+        options.BearerTokenExpiration = TimeSpan.FromDays(30);
+    });
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
@@ -52,6 +54,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapIdentityApi<User>();

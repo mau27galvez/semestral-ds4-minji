@@ -61,12 +61,19 @@ public class GroupService(AppDbContext appDbContext)
                 comment.Id.ToString(),
                 comment.GroupId.ToString(),
                 comment.AuthorId.ToString(),
+                GetAuthorUsername(comment.AuthorId),
                 comment.Content,
                 comment.CreatedAt.ToString(CultureInfo.InvariantCulture),
                 comment.UpdatedAt?.ToString(CultureInfo.InvariantCulture)
             )).ToList();
 
         return commentsResponse;
+    }
+
+    private string GetAuthorUsername(Guid authorId)
+    {
+        var user = appDbContext.Users.FirstOrDefault(u => u.Id == authorId);
+        return user?.Email?.Split("@")[0] ?? "Unknown";
     }
 }
 

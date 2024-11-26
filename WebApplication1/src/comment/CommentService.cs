@@ -68,6 +68,7 @@ public record CommentResponse(
     string Id,
     string GroupId,
     string AuthorId,
+    string AuthorUsername,
     string Content,
     string CreatedAt,
     string? UpdatedAt
